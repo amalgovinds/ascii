@@ -59,7 +59,7 @@ class ExtractFrame:
                 output_file = os.path.join(output_directory, f"frame_{frame_count:04d}.png")
                 cv2.imwrite(output_file, frame)
 
-                video.set(cv2.CAP_PROP_POS_MSEC, (frame_count) * 1000)
+                video.set(cv2.CAP_PROP_POS_MSEC, (frame_count) * 500)
                 frame_count += 1
 
             video.release()
@@ -67,3 +67,22 @@ class ExtractFrame:
         except Exception as e:
             raise e
 
+def main():
+    if len(sys.argv) < 2:
+        raise FileNotFoundError("Please provide the path to the video file")
+    input_video = sys.argv[1]
+    frames_dir = "output_frames"
+    ascii_dir = "ascii_frames"
+
+    # Extract frames from video
+    ExtractFrame.extract_frames(input_video, frames_dir)
+
+    # Convert frames to ASCII
+    converter = ConvertAscii()
+    converter.convert_frames_to_ascii(frames_dir, ascii_dir)
+
+    # Display ASCII video
+    Display.display_ascii_video(ascii_dir, frame_rate=0.5)  # Start with 0.5 fps (2 seconds per frame)
+
+if __name__ == "__main__":
+    main()
