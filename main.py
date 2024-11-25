@@ -2,6 +2,7 @@ from PIL import Image, ImageEnhance
 import time
 import sys, errno
 import os
+import shutil
 import cv2
 from ascii_magic import AsciiArt
 
@@ -83,6 +84,8 @@ def main():
 
     # Display ASCII video
     Display.display_ascii_video(ascii_dir, frame_rate=0.5)  # Start with 0.5 fps (2 seconds per frame)
+    shutil.rmtree("/Users/amalgovinds/Projects/ascii/output_frames")
+    shutil.rmtree("/Users/amalgovinds/Projects/ascii/ascii_frames")
 
 if __name__ == "__main__":
     main()
